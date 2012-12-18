@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ g.project_codename }} ~ Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <header></header>
+      <section id="main">
+        <ul id="users-list">
+          {% for user in users %}
+          <li class="name-block">
+            <h3>{{ user['name'] }}</h3>
+          </li>
+          {% endfor %}
+        </ul>
+        <footer>
+          <nav id="main-nav">
+            <ul>
+              <li>Hi <a href="/user">{{ g.user['name'] }}</a>, what will you do?</li>
+              <li><a href="/user/logout">Make me out.</a></li>
+              <li><a href="/comment">Check out the comments.</a></li>
+              <li>Do nothing, just cross my fingers.</li>
+            </ul>
+          </nav>
+        </footer>
+      </section>
+      <footer></footer>
+    </div>
+  </body>
+</html>

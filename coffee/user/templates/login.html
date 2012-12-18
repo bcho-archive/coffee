@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ g.project_codename }} ~ Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <header></header>
+      <section id="main">
+        <form id="login-form" action="" method="POST">
+          <input name="name" type="text" placeholder="What's your name?"/>
+          <input type="password" name="password" placeholder="... and your password?"/>
+          <input type="submit" value="Count me in!" />
+        </form>
+      </section>
+      <footer></footer>
+    </div>
+  </body>
+</html>

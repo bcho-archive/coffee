@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ g.project_codename }} ~ Comments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <header></header>
+      <section id="main">
+        <h3>Total comments: {{ comments | length }}</h3>
+        <ul id="comments-list">
+          {% for comment in comments %}
+          <li class="comments">
+            <p>{{ comment['content'] }}</p>
+            <small>
+              from <span>{{ comment['author']['name'] }}</span> in {{ comment['created_time'] }}
+              {% if g.user.role == 'admin' %}
+              <a href="/comment/{{ comment['id'] }}/del">delete it.</a>
+              {% endif %}
+            </small>
+            <div class="clearfix"></div>
+          </li>
+          {% endfor %}
+        </ul>
+        <form id="compose-new" action="/comment/add" method="post">
+          <textarea name="content"></textarea>
+          <input type="submit" value="add more!"/>
+        </form>
+        <div class="clearfix"></div>
+        <footer>
+          <nav id="main-nav">
+            <ul>
+              <li>Hi <a href="/user">{{ g.user['name'] }}</a>, what will you do?</li>
+              {% if g.user.role == 'visitor' %}
+              <li><a href="/user/login?next=/comment">Let me in.</a></li>
+              {% else %}
+              <li><a href="/user/logout?next=/comment">Make me out.</a></li>
+              {% endif %}
+              <li>Do nothing, just cross my fingers.</li>
+            </ul>
+          </nav>
+        </footer>
+      </section>
+      <footer></footer>
+    </div>
+  </body>
+</html>
