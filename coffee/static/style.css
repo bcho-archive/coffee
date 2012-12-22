@@ -141,7 +141,6 @@ a {
 
 .comments {
   display: block;
-  width: 100%;
   padding-left: 15px;
   margin-bottom: 25px;
 }
@@ -164,18 +163,11 @@ a {
 }
 
 #compose-new {
-  width: 100%;
-  display: block;
+  padding-left: 15px;
 }
 
 #compose-new textarea {
-  border: 1px solid #000;
-  max-width: 100%;
-  width: 100%;
-}
-
-#compose-new input {
-  border: 0 solid #fff;
-  background-color: #fff;
-  float: right;
+  width: 98%;
+  font-size: 20px;
+  line-height: 30px;
 }

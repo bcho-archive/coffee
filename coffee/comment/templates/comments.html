@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>{{ g.project_codename }} ~ Comments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css' )}}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   </head>
   <body>
@@ -25,8 +26,8 @@
           {% endfor %}
         </ul>
         <form id="compose-new" action="/comment/add" method="post">
-          <textarea name="content"></textarea>
-          <input type="submit" value="add more!"/>
+          <textarea name="content" rows="5"></textarea>
+          <input type="submit" value="add more!" class="btn btn-danger pull-right" />
         </form>
         <div class="clearfix"></div>
         <footer>
