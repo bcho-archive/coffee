@@ -11,25 +11,26 @@ from coffee.models import User
 visitor = db.query(User, lambda x: x['role'] == role['visitor'])[0]
 
 
-#: TODO factory builder
-def require_login(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        if g.user['role'] > role['visitor']:
-            return func(*args, **kwargs)
-        else:
-            abort(403)
-    return wrapper
+class require_role(object):
+    '''Create a function decorator which requires user's role
+    higher than given role.
+    '''
+    def __init__(self, role):
+        self.role = role
+
+    def __call__(self, func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            if g.user['role'] > self.role:
+                return func(*args, **kwargs)
+            else:
+                #: raise redirect rather than abort with 403
+                abort(403)
+        return wrapper
 
 
-def require_admin(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        if g.user['role'] == role['admin']:
-            return func(*args, **kwargs)
-        else:
-            abort(403)
-    return wrapper
+require_login = require_role(role['visitor'])
+require_admin = require_role(role['visitor'])
 
 
 def login(user):
