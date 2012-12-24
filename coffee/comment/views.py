@@ -15,7 +15,7 @@ app = Blueprint('comment', __name__, template_folder='templates')
 
 @app.route('/', methods=['GET'])
 def view_comment():
-    comments = db.query(Comment, None)
+    comments = db.query(Comment)
     find_author(comments)
     return render_template('comments.html', comments=comments)
 
@@ -33,7 +33,7 @@ def add_comment():
 @app.route('/<int:id>/del', methods=['GET'])
 @require_admin
 def delete_comment(id):
-    comment = db.query(Comment, lambda x: x['id'] == id)
+    comment = db.query(Comment, condition=lambda x: x['id'] == id, count=1)
     if not comment:
         abort(404)
     else:

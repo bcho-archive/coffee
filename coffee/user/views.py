@@ -14,7 +14,7 @@ app = Blueprint('user', __name__, template_folder='templates')
 @app.route('/', methods=['GET'])
 @require_login
 def users_view():
-    users = db.query(User, None)
+    users = db.query(User)
     return render_template('users.html', users=users)
 
 
@@ -25,7 +25,7 @@ def user_login():
     elif request.method == 'POST':
         name = request.form.get('name', None)
         password = encrypt(request.form.get('password', ''))
-        u = db.query(User, lambda x: x['name'] == name)
+        u = db.query(User, condition=lambda x: x['name'] == name)
         if not u:
             #: TODO flash message
             return redirect(url_for('.user_login'))

@@ -45,14 +45,11 @@ class DB(object):
     def _next_id(self, model_name):
         return max([i['id'] for i in self.data[model_name]] + [0]) + 1
 
-    def query(self, model, condition):
-        #: TODO improve condition (not only use lambda)
+    def query(self, model, condition=None, count=None):
         if model not in self.models:
             raise QueryError
-        if condition:
-            return filter(condition, self.data[model.__name__])
-        else:
-            return self.data[model.__name__]
+        count = count or len(self.data[model.__name__])
+        return filter(condition, self.data[model.__name__])[:count]
 
     def add(self, obj):
         if not any(map(lambda x: isinstance(obj, x), self.models)):
