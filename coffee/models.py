@@ -81,7 +81,7 @@ class Comment(FileModel):
         return o
 
     def __repr__(self):
-        return '<Comment %s(%d %d)>' % (self['content'],
+        return '<Comment %s(%d %d)>' % (self['content'].encode('utf-8'),
                                         self['id'], self['author_id'])
 
 
