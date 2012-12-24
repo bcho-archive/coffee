@@ -10,6 +10,7 @@ from utils import build_datapath, utc_now, encrypt
 class FileModel(object):
     '''Store the data as file.'''
 
+    name = None
     data_path = None
     keys = []
 
@@ -22,6 +23,9 @@ class FileModel(object):
     def __setitem__(self, name, val):
         self._data[name] = val
 
+    def get(self, k, default):
+        return self._data.get(k, default)
+
     def create(self):
         '''Build from scratch.'''
         raise NotImplementedError
@@ -31,12 +35,16 @@ class FileModel(object):
         '''Build obj from a dict.'''
         raise NotImplementedError
 
+    def validate(self, key, value):
+        return self.get(key, None) == value
+
     @property
     def path(self):
         return os.path.join(self.data_path, '%s.txt' % (str(self['id'])))
 
     @property
     def data(self):
+        '''Jsonify the data.'''
         d = {}
         for i in self.keys:
             d[i] = self[i]
@@ -55,7 +63,8 @@ class FileModel(object):
 
 class Comment(FileModel):
 
-    data_path = build_datapath('comments')
+    name = 'comments'
+    data_path = build_datapath(name)
     keys = ['id', 'content', 'created_time', 'author_id']
 
     def create(self, content, author):
@@ -78,7 +87,8 @@ class Comment(FileModel):
 
 class User(FileModel):
 
-    data_path = build_datapath('users')
+    name = 'users'
+    data_path = build_datapath(name)
     keys = ['id', 'name', 'password', 'role', 'token']
 
     def create(self, name, raw_password, role):

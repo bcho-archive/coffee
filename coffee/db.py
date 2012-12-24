@@ -25,7 +25,7 @@ class DB(object):
         self.models = []
         self.data = {}
         for model in models:
-            name = model.__name__
+            name = model.name
             self.models.append(model)
             self.data[name] = self._read_file(model)
 
@@ -48,25 +48,23 @@ class DB(object):
     def query(self, model, condition=None, count=None):
         if model not in self.models:
             raise QueryError
-        count = count or len(self.data[model.__name__])
-        return filter(condition, self.data[model.__name__])[:count]
+        count = count or len(self.data[model.name])
+        return filter(condition, self.data[model.name])[:count]
 
     def add(self, obj):
         if not any(map(lambda x: isinstance(obj, x), self.models)):
             raise AddError
-        class_name = obj.__class__.__name__
-        if obj not in self.data[class_name]:
-            obj['id'] = self._next_id(class_name)
-            self.data[class_name].append(obj)
+        if obj not in self.data[obj.name]:
+            obj['id'] = self._next_id(obj.name)
+            self.data[obj.name].append(obj)
 
     def remove(self, obj):
         if not any(map(lambda x: isinstance(obj, x), self.models)):
             raise RemoveError
-        class_name = obj.__class__.__name__
-        if obj not in self.data[class_name]:
+        if obj not in self.data[obj.name]:
             raise RemoveError
         else:
-            self.data[class_name].remove(obj)
+            self.data[obj.name].remove(obj)
             obj.delete()
 
     def commit(self):
