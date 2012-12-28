@@ -5,6 +5,7 @@
     <title>{{ g.project_codename }} ~ Comments</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css' )}}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
   </head>
   <body>
     <div class="container">
@@ -20,6 +21,7 @@
               {% if g.user.role == 'admin' %}
               <a href="/comment/{{ comment['id'] }}/del">delete it.</a>
               {% endif %}
+              <a class="reply">reply</a>
             </small>
             <div class="clearfix"></div>
           </li>
@@ -47,4 +49,5 @@
       <footer></footer>
     </div>
   </body>
+  <script type="text/javascript" src="{{ url_for('static', filename='reply.js') }}"></script>
 </html>
