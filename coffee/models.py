@@ -18,7 +18,7 @@ class FileModel(object):
         self._data = {}
 
     def __getitem__(self, name):
-        return self._data[name]
+        return self._data.get(name, None)
 
     def __setitem__(self, name, val):
         self._data[name] = val
@@ -78,7 +78,7 @@ class Comment(FileModel):
     def fromdict(d):
         o = Comment()
         for key in o.keys:
-            o[key] = d[key]
+            o[key] = d.get(key, None)
         return o
 
     def __repr__(self):
@@ -103,7 +103,7 @@ class User(FileModel):
     def fromdict(d):
         o = User()
         for key in o.keys:
-            o[key] = d[key]
+            o[key] = d.get(key, None)
         return o
 
     def __repr__(self):
