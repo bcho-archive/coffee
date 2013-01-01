@@ -21,7 +21,7 @@
               {% if g.user.role == 'admin' %}
               <a href="/comment/{{ comment['id'] }}/del">delete it.</a>
               {% endif %}
-              <a href="#" class="reply" data-comment-id="{{ comment['id'] }}">reply</a>
+              <a href="#" class="reply" data-comment-id="{{ comment['id'] }}" data-comment-author="{{ comment['author']['name'] }}">reply</a>
             </small>
             <div class="clearfix"></div>
           </li>

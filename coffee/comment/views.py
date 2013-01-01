@@ -7,7 +7,7 @@ from coffee.db import db
 from coffee.models import Comment
 
 from coffee.user.utils import require_admin
-from .utils import find_author
+from .utils import find_author, find_reference
 
 
 app = Blueprint('comment', __name__, template_folder='templates')
@@ -17,6 +17,7 @@ app = Blueprint('comment', __name__, template_folder='templates')
 def view_comment():
     comments = db.query(Comment)
     find_author(comments)
+    find_reference(comments)
     return render_template('comments.html', comments=comments)
 
 
@@ -46,7 +47,7 @@ def delete_comment(id):
 def reply_comment(refer_id):
     content = request.form['content']
     comment = Comment().create(content, g.user)
-    comment['refer'] = refer_id
+    comment['refer_id'] = refer_id
     db.add(comment)
     db.commit()
 
