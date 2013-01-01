@@ -40,3 +40,14 @@ def delete_comment(id):
         db.remove(comment[0])
         db.commit()
         return redirect(url_for('.view_comment'))
+
+
+@app.route('/<int:refer_id>/reply', methods=['POST'])
+def reply_comment(refer_id):
+    content = request.form['content']
+    comment = Comment().create(content, g.user)
+    comment['refer'] = refer_id
+    db.add(comment)
+    db.commit()
+
+    return redirect(url_for('.view_comment'))

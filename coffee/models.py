@@ -65,12 +65,13 @@ class Comment(FileModel):
 
     name = 'comments'
     data_path = build_datapath(name)
-    keys = ['id', 'content', 'created_time', 'author_id']
+    keys = ['id', 'content', 'created_time', 'author_id', 'refer']
 
     def create(self, content, author):
         self['content'] = content
         self['author_id'] = author['id']
         self['created_time'] = utc_now()
+        self['refer'] = None
         return self
 
     @staticmethod
